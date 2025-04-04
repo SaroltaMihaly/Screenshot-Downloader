@@ -4,6 +4,17 @@ import pyautogui
 import os
 import time
 
+def pdf_from_screenshots(screenshot_folder, output_pdf_path):
+    from fpdf import FPDF
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    # Get all image files in the folder
+    images = [f for f in os.listdir(screenshot_folder) if f.endswith('.png')]
+    for image in sorted(images):
+        pdf.add_page()
+        pdf.image(os.path.join(screenshot_folder, image), x=0, y=0, w=210, h=297)
+    pdf.output(output_pdf_path)
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
